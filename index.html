@@ -1,1 +1,581 @@
-index
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VibeLotto - 로또 번호 추천 & 통계 분석 앱 | QR스캔 | 비너스 시뮬레이션</title>
+    <meta name="description" content="VibeLotto는 실제 비너스 추첨 시스템을 시뮬레이션한 로또 앱입니다. QR코드 스캔, AI 번호 추천, 통계 분석, 판매점 지도, 1등 배출점 정보 등 다양한 기능을 제공합니다.">
+    <meta name="keywords" content="로또, 로또번호, 로또추천, 로또분석, 로또통계, QR스캔, 로또판매점, 1등배출점, 비너스, 로또시뮬레이션, 동행복권">
+    <meta name="author" content="VibeLotto">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://vibelotto.com/">
+    <meta property="og:title" content="VibeLotto - 로또 번호 추천 & 통계 분석 앱">
+    <meta property="og:description" content="실제 비너스 추첨 시스템을 시뮬레이션한 로또 앱. QR스캔, AI 추천, 통계 분석, 판매점 지도 기능 제공">
+    <meta property="og:image" content="https://vibelotto.com/og-image.jpg">
+    <meta property="og:locale" content="ko_KR">
+    <meta property="og:site_name" content="VibeLotto">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://vibelotto.com/">
+    <meta name="twitter:title" content="VibeLotto - 로또 번호 추천 & 통계 분석 앱">
+    <meta name="twitter:description" content="실제 비너스 추첨 시스템을 시뮬레이션한 로또 앱. QR스캔, AI 추천, 통계 분석, 판매점 지도 기능 제공">
+    <meta name="twitter:image" content="https://vibelotto.com/og-image.jpg">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://vibelotto.com/">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #FFD700;
+            --primary-dark: #FFA500;
+            --secondary: #1a1a2e;
+            --accent: #FF6B6B;
+            --success: #4ECDC4;
+            --text: #ffffff;
+            --text-muted: #a0a0a0;
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: var(--secondary);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 900;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.3) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 50%, rgba(118, 75, 162, 0.3) 0%, transparent 50%);
+            z-index: 0;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 200px;
+            background: linear-gradient(to top, var(--secondary), transparent);
+            z-index: 1;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 1;
+            padding: 100px 0;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--gradient-1);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .section {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 60px;
+        }
+
+        .section-title span {
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px 30px;
+            transition: all 0.3s;
+        }
+
+        .feature-card:focus-within {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        .gradient-icon-1 { background: var(--gradient-1); }
+        .gradient-icon-2 { background: var(--gradient-2); }
+        .gradient-icon-3 { background: var(--gradient-3); }
+
+        .tech-stack {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .tech-item {
+            text-align: center;
+        }
+
+        .tech-item img {
+            width: 80px;
+            height: 80px;
+            border-radius: 15px;
+            margin-bottom: 10px;
+        }
+
+        .tech-item p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .screenshot-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .screenshot {
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s;
+        }
+
+        .screenshot:hover {
+            transform: scale(1.05);
+        }
+
+        .screenshot img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .architecture {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 40px;
+        }
+
+        .architecture-diagram {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .arch-item {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            min-width: 150px;
+        }
+
+        .arch-item h4 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .arch-item p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 900;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            margin-top: 10px;
+        }
+
+        footer {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 60px 0 30px;
+            margin-top: 100px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h4 {
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .footer-section a {
+            color: var(--text-muted);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: var(--text);
+        }
+
+        .copyright {
+            text-align: center;
+            color: var(--text-muted);
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">🎰 VibeLotto</div>
+                <div class="nav-links">
+                    <a href="#features">기능</a>
+                    <a href="#download">다운로드</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>VibeLotto</h1>
+            <p>비너스(VENUS) 추첨 시스템을 물리 시뮬레이션으로 재현한 로또 앱</p>
+            <div class="cta-buttons">
+                <a href="#download" class="btn btn-primary">📱 앱 다운로드</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="features">
+        <div class="container">
+            <h2 class="section-title">VibeLotto <span>주요 기능</span></h2>
+            <div class="features-grid">
+                <article class="feature-card">
+                    <div class="feature-icon gradient-icon-1" aria-hidden="true">🎰</div>
+                    <h3>비너스 물리 시뮬레이션</h3>
+                    <p>실제 비너스 추첨 시스템의 공기혼합방식과 드럼링 회전추출을 물리 엔진으로 정밀하게 재현하여 현실적인 추첨 경험을 제공합니다.</p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-icon gradient-icon-2" aria-hidden="true">📷</div>
+                    <h3>QR코드 스캔</h3>
+                    <p>로또 용지 QR코드를 자동 인식하여 구매 내역을 저장하고, 실시간 당첨 확인 및 중복 번호 자동 체크 기능을 제공합니다.</p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-icon gradient-icon-3" aria-hidden="true">📊</div>
+                    <h3>로또 통계 분석</h3>
+                    <p>과거 1,000회 이상의 당첨 데이터를 분석하여 번호별 출현 빈도, 홀짝 비율, 고저 비율, 연속번호 등 다양한 통계 정보를 제공합니다.</p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-icon gradient-icon-1" aria-hidden="true">🤖</div>
+                    <h3>AI 번호 추천</h3>
+                    <p>보수적, 균형잡힌, 공격적 3가지 전략을 기반으로 과거 데이터 분석 결과를 활용하여 스마트한 로또 번호를 추천합니다.</p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-icon gradient-icon-2" aria-hidden="true">🗺️</div>
+                    <h3>우리동네 판매점</h3>
+                    <p>GPS 기반으로 주변 로또 판매점을 찾고, 1등 배출점 여부를 표시하며 Google Maps 연동으로 판매점까지 길찾기가 가능합니다.</p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-icon gradient-icon-3" aria-hidden="true">💾</div>
+                    <h3>백업 및 복원</h3>
+                    <p>구매 내역을 JSON 파일로 백업하여 기기 변경 시 간편하게 복원할 수 있으며, 클라우드 저장소와 연동하여 안전하게 관리할 수 있습니다.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="section" id="download">
+        <div class="container">
+            <h2 class="section-title">VibeLotto <span>다운로드</span></h2>
+            <div style="text-align: center; margin-top: 40px;">
+                <p style="color: var(--text-muted); margin-bottom: 30px;">
+                    VibeLotto를 지금 다운로드하고 실제 비너스 추첨 시스템을 경험하세요.
+                </p>
+                <div class="cta-buttons">
+                    <a href="https://play.google.com/store/apps/details?id=com.jayem.vibelotto" class="btn btn-primary" rel="noopener">🤖 Google Play</a>
+                    <a href="https://vibelotto.com/vibelotto.apk" class="btn btn-secondary" rel="nofollow">📲 APK 직접 다운로드</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>VibeLotto</h4>
+                    <p style="color: var(--text-muted);">비너스 추첨 시스템 시뮬레이션 앱</p>
+                </div>
+                <div class="footer-section">
+                    <h4>링크</h4>
+                    <a href="#features">기능 소개</a>
+                    <a href="#download">다운로드</a>
+                </div>
+                <div class="footer-section">
+                    <h4>라이선스</h4>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">
+                        이 앱은 교육 및 엔터테인먼트 목적으로만 사용됩니다.<br>
+                        실제 로또 당첨 및 복권 시스템과는 무관합니다.
+                    </p>
+                </div>
+            </div>
+        <div class="copyright">
+            <p>&copy; 2025 VibeLotto. All rights reserved. | <a href="/privacy.html" style="color: var(--text-muted);">개인정보처리방침</a></p>
+        </div>
+        </div>
+    </footer>
+
+    <!-- 구조화된 데이터 (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "VibeLotto",
+        "operatingSystem": "Android",
+        "applicationCategory": "LifestyleApplication",
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.5",
+            "ratingCount": "1000"
+        },
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "KRW"
+        },
+        "description": "VibeLotto는 실제 비너스 추첨 시스템을 물리 시뮬레이션으로 재현한 로또 앱입니다. QR코드 스캔, AI 번호 추천, 통계 분석, 판매점 지도, 1등 배출점 정보 등 다양한 기능을 제공합니다.",
+        "featureList": [
+            "비너스 추첨 시스템 물리 시뮬레이션",
+            "QR코드 스캔 및 자동 저장",
+            "AI 기반 로또 번호 추천",
+            "과거 1000+회차 통계 분석",
+            "우리동네 로또 판매점 지도",
+            "1등 배출점 표시 및 길참기",
+            "백업 및 복원 기능"
+        ]
+    }
+    </script>
+</body>
+</html>
