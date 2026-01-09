@@ -86,17 +86,11 @@
         .logo {
             font-size: 24px;
             font-weight: 900;
-            background: var(--gradient-1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             background-clip: text;
-            color: #fff;
-        }
-
-        @supports (-webkit-text-fill-color: transparent) {
-            .logo {
-                -webkit-text-fill-color: transparent;
-            }
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text;
         }
 
         .nav-links {
@@ -157,16 +151,17 @@
             font-size: 4rem;
             font-weight: 900;
             margin-bottom: 20px;
-            background: var(--gradient-1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             background-clip: text;
             color: #fff;
+            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text;
+            display: inline-block;
         }
 
-        @supports (-webkit-text-fill-color: transparent) {
+        @supports (background-clip: text) {
             .hero h1 {
-                -webkit-text-fill-color: transparent;
+                color: transparent;
             }
         }
 
@@ -231,17 +226,11 @@
         }
 
         .section-title span {
-            background: var(--gradient-1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             background-clip: text;
-            color: #fff;
-        }
-
-        @supports (-webkit-text-fill-color: transparent) {
-            .section-title span {
-                -webkit-text-fill-color: transparent;
-            }
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text;
         }
 
         .features-grid {
@@ -392,17 +381,11 @@
         .stat-number {
             font-size: 3rem;
             font-weight: 900;
-            background: var(--gradient-1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             background-clip: text;
-            color: #fff;
-        }
-
-        @supports (-webkit-text-fill-color: transparent) {
-            .stat-number {
-                -webkit-text-fill-color: transparent;
-            }
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text;
         }
 
         .stat-label {
